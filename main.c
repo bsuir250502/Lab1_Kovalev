@@ -1,8 +1,7 @@
 #include<stdio.h>
 #include<conio.h>
-#include<iostream>
-
-using namespace std;
+#include<string.h>
+#include<stdlib.h>
 
 #define max_length 30
 #define max_base 20
@@ -39,7 +38,7 @@ void main (int argc, char **argv)
 	sort_array(children, array_size);
 	search_illness(children, array_size, argv);
 	free(children);
-	getch();
+	_getch();
 }
 
 int init_array(kindergarden* new_kids_base)
@@ -82,7 +81,8 @@ int yes_no()
 	choice = (char*)malloc(max_length*sizeof(char));
 	do
 		{
-			__fpurge(stdin);
+			//__fpurge(stdin);
+			fflush(stdin);
 			fgets(choice, 1, stdin);
 			if (choice[0] == 'y')
 			{
@@ -105,7 +105,8 @@ char* check_string(char* comment)
 	do
 	{
 		printf("%s", comment);
-        __fpurge(stdin);
+        //__fpurge(stdin);
+        fflush(stdin);
         fgets(text, max_length, stdin);
         if (text[0] == '\n')
 		{
