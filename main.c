@@ -1,7 +1,7 @@
 #include<stdio.h>
-#include<conio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<stdio_ext.h>
 
 #define max_length 30
 #define max_base 20
@@ -25,11 +25,10 @@ struct kindergarden
 
 int init_array(struct kindergarden*);
 char* check_string(char*);
-int yes_no();
 void sort_array(struct kindergarden*, int);
 void search_illness(struct kindergarden*, int, char**);
 
-void main (int argc, char **argv)
+int main (int argc, char **argv)
 {
 	int array_size;
 	struct kindergarden *children;
@@ -38,64 +37,42 @@ void main (int argc, char **argv)
 	sort_array(children, array_size);
 	search_illness(children, array_size, argv);
 	free(children);
-	_getch();
+	return 0;
 }
 
-int init_array(kindergarden* new_kids_base)
+int init_array(struct kindergarden* new_kids_base)
 {
-	int n=0;
+	int n=0, identifier;
 	do
 	{
-		new_kids_base[n].surname = check_string("Enter a child's surname");
-		new_kids_base[n].name = check_string("Enter a child's name");
-		printf("Was a child hospitalized? y/n");
-		if(yes_no())
+		new_kids_base[n].surname = check_string("Enter a child's surname: ");
+		new_kids_base[n].name = check_string("Enter a child's name: ");
+		puts("Was a child hospitalized? y - 1/n - 0");
+		scanf("%d", &identifier);
+		if(identifier)
 		{
 			new_kids_base[n].hosp_identify = 1;
-			new_kids_base[n].hospital.hosp.illness = check_string("Enter an illness");
-			new_kids_base[n].hospital.hosp.hospnum = check_string("Enter the number of hospital");
-			new_kids_base[n].hospital.hosp.hospplace = check_string("Enter the situation of hospital");
-			new_kids_base[n].hospital.hosp.hospdoc = check_string("Enter a hospital doc's surmane");
+			new_kids_base[n].hospital.hosp.illness = check_string("Enter an illness: ");
+			new_kids_base[n].hospital.hosp.hospnum = check_string("Enter the number of hospital: ");
+			new_kids_base[n].hospital.hosp.hospplace = check_string("Enter the situation of hospital: ");
+			new_kids_base[n].hospital.hosp.hospdoc = check_string("Enter a hospital doc's surname: ");
 		}
 		else
 		{
 			new_kids_base[n].hosp_identify = 0;
-			new_kids_base[n].hospital.nonhosp.illness = check_string("Enter an illness");
-			new_kids_base[n].hospital.nonhosp.doc = check_string("Enter a doc's surname");
+			new_kids_base[n].hospital.nonhosp.illness = check_string("Enter an illness: ");
+			new_kids_base[n].hospital.nonhosp.doc = check_string("Enter a doc's surname: ");
 		};
 
 		if(n<max_base-1)
 		{
-			printf("Do you want to continue? y/n");
-			if(!yes_no()) break;
+			printf("Do you want to continue? y - 1/n - 0 ");
+			scanf("%d", &identifier);
+			if (!identifier) break;
 		}
 		n++;
 	} while (n<max_base);
 	return n+1;
-}
-
-int yes_no()
-{
-	int i;
-	char *choice;
-	choice = (char*)malloc(max_length*sizeof(char));
-	do
-		{
-			//__fpurge(stdin);
-			fflush(stdin);
-			fgets(choice, 1, stdin);
-			if (choice[0] == 'y')
-			{
-				i = 1;
-				break;
-			}
-			else if (choice[0] == 'n')
-			{
-				i = 0;
-				break;
-			}
-		} while (1);
-	return i;
 }
 
 char* check_string(char* comment)
@@ -104,16 +81,14 @@ char* check_string(char* comment)
 	text = (char*)malloc(max_length*sizeof(char));
 	do
 	{
-		printf("%s", comment);
-        //__fpurge(stdin);
-        fflush(stdin);
+	printf("%s", comment);
+        __fpurge(stdin);
         fgets(text, max_length, stdin);
-        if (text[0] == '\n')
+        if(text[0] == '\n')
 		{
-            continue;
-        }
-        break;
-	} while (1);
+            		continue;
+       		}
+	} while (0);
 	return text;
 }
 
