@@ -42,13 +42,18 @@ int main (int argc, char **argv)
 
 int init_array(struct kindergarden* new_kids_base)
 {
-	int n=0, identifier;
+	int n=0, identifier = 1;
 	do
 	{
 		new_kids_base[n].surname = check_string("Enter a child's surname: ");
-		new_kids_base[n].name = check_string("Enter a child's name: ");
-		puts("Was a child hospitalized? y - 1/n - 0");
+		new_kids_base[n].name = check_string("Enter a child's name: ");	
+		while(1)
+		{
+		puts("Was a child hospitalized? y - 1/n - 0");		
 		scanf("%d", &identifier);
+		if(identifier == 1 || identifier == 0) break;
+		puts("It's not correct. Please, input data again.");
+		}
 		if(identifier)
 		{
 			new_kids_base[n].hosp_identify = 1;
@@ -63,11 +68,16 @@ int init_array(struct kindergarden* new_kids_base)
 			new_kids_base[n].hospital.nonhosp.illness = check_string("Enter an illness: ");
 			new_kids_base[n].hospital.nonhosp.doc = check_string("Enter a doc's surname: ");
 		};
-
+		identifier = 0;
 		if(n<max_base-1)
 		{
-			printf("Do you want to continue? y - 1/n - 0 ");
-			scanf("%d", &identifier);
+			while(1)
+			{
+				printf("Do you want to continue? y - 1/n - 0 ");
+				scanf("%d", &identifier);
+				if(identifier == 1 || identifier == 0) break;
+				puts("It's not correct. Please, input data again.");
+			}
 			if (!identifier) break;
 		}
 		n++;
